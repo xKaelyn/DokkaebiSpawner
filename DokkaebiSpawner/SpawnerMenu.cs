@@ -4,25 +4,15 @@ using static DokkaebiSpawner.GlobalVariables;
 
 public class SpawnerMenu : BaseScript
 {
+    private UIMenu mainMenu;
     private MenuPool _menuPool;
-    private static UIMenu mainMenu;
-    private static UIMenu vehicleSelectorMenu;
-    private static UIMenuItem navigateToSelectorMenuItem;
-    private static UIMenuCheckboxItem automaticallyEnterVehicle;
-    private static UIMenuListItem modelList;
-    private static UIMenuItem confirmItem;
+    private UIMenu vehicleSelectorMenu;
+    private UIMenuItem navigatetoSelectorMenuItem;
+    private UIMenuListItem modelList;
+    private UIMenuCheckboxItem automaticallyEnterVehicle;
+    private UIMenuItem confirmItem;
 
-    public void AutomaticallyEnterVehicle(UIMenu menu)
-    {
-        menu.AddItem(automaticallyEnterVehicle);
-    }
-
-    public void Confirm(UIMenu menu)
-    {
-        menu.AddItem(confirmItem);
-    }
-
-    public static void OurOnItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
+    public void OurOnItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
     {
         if (sender == mainMenu)
         {
@@ -30,11 +20,15 @@ public class SpawnerMenu : BaseScript
             {
                 string modelname = modelList.IndexToItem(modelList.Index);
                 Model vehiclemodel = new Model(modelname);
+
                 bool automaticallyenter = automaticallyEnterVehicle.Checked;
+
                 Vector3 Position;
+
                 Position = Game.PlayerPed.GetOffsetPosition(new Vector3(0f, 1f, 0f));
 
                 Vehicle newVehicle = new Vehicle(vehiclemodel);
+                newVehicle.Position = Position;
             }
         }
     }
@@ -42,31 +36,37 @@ public class SpawnerMenu : BaseScript
     public SpawnerMenu()
     {
         _menuPool = new MenuPool();
-        //var mainMenu = new UIMenu("DokkaebiSpawner", "Spawn emergency vehicles with ease");
+        mainMenu = new UIMenu("DokkaebiSpawner", "Spawn emergency vehicles with ease");
         _menuPool.Add(mainMenu);
 
-        vehicleSelectorMenu = new UIMenu("Selector Menu", "");
-        vehicleSelectorMenu.SetMenuWidthOffset(30);
+        vehicleSelectorMenu = new UIMenu("Vehicle Selection", "");
         _menuPool.Add(vehicleSelectorMenu);
 
-        navigateToSelectorMenuItem = new UIMenuItem("Vehicle Selector Menu");
-        mainMenu.AddItem(navigateToSelectorMenuItem);
-        mainMenu.BindMenuToItem(vehicleSelectorMenu, navigateToSelectorMenuItem);
+        navigatetoSelectorMenuItem = new UIMenuItem("Vehicle Selection");
+        mainMenu.AddItem(navigatetoSelectorMenuItem);
+        mainMenu.BindMenuToItem(vehicleSelectorMenu, navigatetoSelectorMenuItem);
         vehicleSelectorMenu.ParentMenu = mainMenu;
 
-        modelList = new UIMenuListItem("Model", policeModelList, 0);
+        modelList = new UIMenuListItem("Vehicle", policeModelList, 0);
         vehicleSelectorMenu.AddItem(modelList);
 
-        AutomaticallyEnterVehicle(mainMenu);
-        Confirm(mainMenu);
-        _menuPool.RefreshIndex();
-        vehicleSelectorMenu.RefreshIndex();
+        automaticallyEnterVehicle = new UIMenuCheckboxItem("Automatically enter vehicle?", false);
+        mainMenu.AddItem(automaticallyEnterVehicle);
 
+        mainMenu.AddItem(confirmItem = new UIMenuItem("Confirm"));
+
+        mainMenu.RefreshIndex();
+        vehicleSelectorMenu.RefreshIndex();
         mainMenu.OnItemSelect += OurOnItemSelect;
 
+        //  Mouse controls disabled
         _menuPool.MouseEdgeEnabled = false;
         _menuPool.ControlDisablingEnabled = false;
+        mainMenu.MouseEdgeEnabled = false;
+        mainMenu.MouseControlsEnabled = false;
+        mainMenu.ControlDisablingEnabled = false;
         vehicleSelectorMenu.MouseEdgeEnabled = false;
+        vehicleSelectorMenu.MouseControlsEnabled = false;
         vehicleSelectorMenu.ControlDisablingEnabled = false;
 
         Tick += async () =>
