@@ -20,7 +20,7 @@ public class SpawnerMenu : BaseScript
     public void ModelList(UIMenu menu)
     {
         var modelList = new UIMenuListItem("Vehicle", policeModelList, 0);
-        //add to vehicle selector menu
+        menu.AddItem(modelList);
     }
 
     public SpawnerMenu()
