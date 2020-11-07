@@ -1,4 +1,7 @@
-﻿using CitizenFX.Core;
+﻿using System;
+using System.Collections.Generic;
+using CitizenFX.Core;
+using static CitizenFX.Core.Native.API;
 using NativeUI;
 using static DokkaebiSpawner.GlobalVariables;
 
@@ -9,10 +12,9 @@ public class SpawnerMenu : BaseScript
     private UIMenu vehicleSelectorMenu;
     private UIMenuItem navigatetoSelectorMenuItem;
     private UIMenuListItem modelList;
-    private UIMenuCheckboxItem automaticallyEnterVehicle;
     private UIMenuItem confirmItem;
 
-    public void OurOnItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
+    private void OurOnItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
     {
         if (sender == mainMenu)
         {
@@ -21,14 +23,17 @@ public class SpawnerMenu : BaseScript
                 string modelname = modelList.IndexToItem(modelList.Index);
                 Model vehiclemodel = new Model(modelname);
 
-                bool automaticallyenter = automaticallyEnterVehicle.Checked;
-
                 Vector3 Position;
 
                 Position = Game.PlayerPed.GetOffsetPosition(new Vector3(0f, 1f, 0f));
 
-                Vehicle newVehicle = new Vehicle(vehiclemodel);
-                newVehicle.Position = Position;
+                var newVehicle = World.CreateVehicle(modelname, Position, Game.PlayerPed.Heading);
+
+                TriggerEvent("chat:AddMessage", new
+                {
+                    color = new[] { 255, 0, 0 },
+                    args = new[] { "[DokkaebiSpawner]", $"Spawned {modelname} successfully." }
+                });
             }
         }
     }
@@ -50,10 +55,8 @@ public class SpawnerMenu : BaseScript
         modelList = new UIMenuListItem("Vehicle", policeModelList, 0);
         vehicleSelectorMenu.AddItem(modelList);
 
-        automaticallyEnterVehicle = new UIMenuCheckboxItem("Automatically enter vehicle?", false);
-        mainMenu.AddItem(automaticallyEnterVehicle);
-
-        mainMenu.AddItem(confirmItem = new UIMenuItem("Confirm"));
+        confirmItem = new UIMenuItem("Confirm");
+        mainMenu.AddItem(confirmItem);
 
         mainMenu.RefreshIndex();
         vehicleSelectorMenu.RefreshIndex();
