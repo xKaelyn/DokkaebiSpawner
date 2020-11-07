@@ -33,6 +33,9 @@ public class SpawnerMenu : BaseScript
         AutomaticallyEnterVehicle(mainMenu);
         _menuPool.RefreshIndex();
 
+        _menuPool.MouseEdgeEnabled = false;
+        _menuPool.ControlDisablingEnabled = false;
+
         Tick += async () =>
         {
             _menuPool.ProcessMenus();
