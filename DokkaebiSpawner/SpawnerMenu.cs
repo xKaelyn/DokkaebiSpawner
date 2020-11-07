@@ -17,10 +17,10 @@ public class SpawnerMenu : BaseScript
         menu.AddItem(automaticallyEnterVehicle);
     }
 
-    public void ModelList(UIMenu menu)
+    public void Confirm(UIMenu menu)
     {
-        var modelList = new UIMenuListItem("Vehicle", policeModelList, 0);
-        menu.AddItem(modelList);
+        var confirmCheckbox = new UIMenuCheckboxItem("Confirm", false);
+        menu.AddItem(confirmCheckbox);
     }
 
     public SpawnerMenu()
@@ -29,8 +29,8 @@ public class SpawnerMenu : BaseScript
         var mainMenu = new UIMenu("DokkaebiSpawner", "Spawn emergency vehicles with ease");
         _menuPool.Add(mainMenu);
         VehicleSelection(mainMenu);
-        ModelList(mainMenu);
         AutomaticallyEnterVehicle(mainMenu);
+        Confirm(mainMenu);
         _menuPool.RefreshIndex();
 
         _menuPool.MouseEdgeEnabled = false;
