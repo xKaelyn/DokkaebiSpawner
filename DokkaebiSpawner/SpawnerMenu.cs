@@ -1,6 +1,5 @@
 ﻿using CitizenFX.Core;
 using NativeUI;
-using System.Security.Cryptography.X509Certificates;
 using static DokkaebiSpawner.GlobalVariables;
 
 public class SpawnerMenu : BaseScript
