@@ -1,40 +1,74 @@
 ﻿using CitizenFX.Core;
 using NativeUI;
+using System.Security.Cryptography.X509Certificates;
 using static DokkaebiSpawner.GlobalVariables;
 
 public class SpawnerMenu : BaseScript
 {
     private MenuPool _menuPool;
-    public void VehicleSelection(UIMenu menu)
-    {
-        var selectionMenuItem = new UIMenuListItem("Model", policeModelList, 0);
-        menu.AddItem(selectionMenuItem);
-    }
+    private static UIMenu mainMenu;
+    private static UIMenu vehicleSelectorMenu;
+    private static UIMenuItem navigateToSelectorMenuItem;
+    private static UIMenuCheckboxItem automaticallyEnterVehicle;
+    private static UIMenuListItem modelList;
+    private static UIMenuItem confirmItem;
 
     public void AutomaticallyEnterVehicle(UIMenu menu)
     {
-        var automaticallyEnterVehicle = new UIMenuCheckboxItem("Automatically enter vehicle", false);
         menu.AddItem(automaticallyEnterVehicle);
     }
 
     public void Confirm(UIMenu menu)
     {
-        var confirmCheckbox = new UIMenuCheckboxItem("Confirm", false);
-        menu.AddItem(confirmCheckbox);
+        menu.AddItem(confirmItem);
+    }
+
+    public static void OurOnItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
+    {
+        if (sender == mainMenu)
+        {
+            if (selectedItem == confirmItem)
+            {
+                string modelname = modelList.IndexToItem(modelList.Index);
+                Model vehiclemodel = new Model(modelname);
+                bool automaticallyenter = automaticallyEnterVehicle.Checked;
+                Vector3 Position;
+                Position = Game.PlayerPed.GetOffsetPosition(new Vector3(0f, 1f, 0f));
+
+                Vehicle newVehicle = new Vehicle(vehiclemodel);
+            }
+        }
     }
 
     public SpawnerMenu()
     {
         _menuPool = new MenuPool();
-        var mainMenu = new UIMenu("DokkaebiSpawner", "Spawn emergency vehicles with ease");
+        //var mainMenu = new UIMenu("DokkaebiSpawner", "Spawn emergency vehicles with ease");
         _menuPool.Add(mainMenu);
-        VehicleSelection(mainMenu);
+
+        vehicleSelectorMenu = new UIMenu("Selector Menu", "");
+        vehicleSelectorMenu.SetMenuWidthOffset(30);
+        _menuPool.Add(vehicleSelectorMenu);
+
+        navigateToSelectorMenuItem = new UIMenuItem("Vehicle Selector Menu");
+        mainMenu.AddItem(navigateToSelectorMenuItem);
+        mainMenu.BindMenuToItem(vehicleSelectorMenu, navigateToSelectorMenuItem);
+        vehicleSelectorMenu.ParentMenu = mainMenu;
+
+        modelList = new UIMenuListItem("Model", policeModelList, 0);
+        vehicleSelectorMenu.AddItem(modelList);
+
         AutomaticallyEnterVehicle(mainMenu);
         Confirm(mainMenu);
         _menuPool.RefreshIndex();
+        vehicleSelectorMenu.RefreshIndex();
+
+        mainMenu.OnItemSelect += OurOnItemSelect;
 
         _menuPool.MouseEdgeEnabled = false;
         _menuPool.ControlDisablingEnabled = false;
+        vehicleSelectorMenu.MouseEdgeEnabled = false;
+        vehicleSelectorMenu.ControlDisablingEnabled = false;
 
         Tick += async () =>
         {
