@@ -6,4 +6,4 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/xSklzxDokkaebi/DokkaebiSpawner?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/xSklzxDokkaebi/DokkaebiSpawner?style=for-the-badge)
 
-A simple tool to make spawning emergency vehicles easier.
+### Ever wanted an easier way to spawn your emergency vehicle? Look no further. 
