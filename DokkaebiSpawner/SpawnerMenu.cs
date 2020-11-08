@@ -6,6 +6,9 @@ using CitizenFX.Core.Native;
 using NativeUI;
 using static DokkaebiSpawner.GlobalVariables;
 
+/* DokkaebiSpawner | Developed by xSklzx Dokkaebi */
+/* Available via the MIT license */
+
 public class SpawnerMenu : BaseScript
 {
     private UIMenu mainMenu;
