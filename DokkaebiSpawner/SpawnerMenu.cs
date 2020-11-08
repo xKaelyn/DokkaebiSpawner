@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using CitizenFX.Core.UI;
 using NativeUI;
 using static DokkaebiSpawner.GlobalVariables;
 
@@ -52,6 +53,9 @@ public class SpawnerMenu : BaseScript
 
     public SpawnerMenu()
     {
+        Screen.ShowNotification("DokkaebiSpawner Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + " has been initialized.");
+        Debug.WriteLine("DokkaebiSpawner Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + " has been initialized.");
+
         _menuPool = new MenuPool();
         mainMenu = new UIMenu("DokkaebiSpawner", "Spawn emergency vehicles with ease");
         _menuPool.Add(mainMenu);
