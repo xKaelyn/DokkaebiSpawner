@@ -20,6 +20,7 @@ namespace DokkaebiSpawner
             "FBI2",
             "PD1",
             "FPIS",
+            "CVPI",
             "CHGR",
             "CHGR2",
             "M5RB_VV",

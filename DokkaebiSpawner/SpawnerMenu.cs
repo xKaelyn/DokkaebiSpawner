@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CitizenFX.Core;
-using static CitizenFX.Core.Native.API;
+﻿using CitizenFX.Core;
 using NativeUI;
 using static DokkaebiSpawner.GlobalVariables;
 
@@ -25,13 +22,13 @@ public class SpawnerMenu : BaseScript
 
                 Vector3 Position;
 
-                Position = Game.PlayerPed.GetOffsetPosition(new Vector3(0f, 1f, 0f));
+                Position = Game.PlayerPed.GetOffsetPosition(new Vector3(0f, 5f, 0f));
 
                 var newVehicle = World.CreateVehicle(modelname, Position, Game.PlayerPed.Heading);
 
-                TriggerEvent("chat:AddMessage", new
+                TriggerEvent("chat:addMessage", new
                 {
-                    color = new[] { 255, 0, 0 },
+                    color = new[] { 255, 153, 153 },
                     args = new[] { "[DokkaebiSpawner]", $"Spawned {modelname} successfully." }
                 });
             }
