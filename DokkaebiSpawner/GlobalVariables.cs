@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+/* DokkaebiSpawner | Developed by xSklzx Dokkaebi */
+/* Available via the MIT license */
+
 namespace DokkaebiSpawner
 {
     public class GlobalVariables
