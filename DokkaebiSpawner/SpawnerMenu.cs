@@ -1,4 +1,8 @@
-﻿using CitizenFX.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CitizenFX.Core;
+using CitizenFX.Core.Native;
 using NativeUI;
 using static DokkaebiSpawner.GlobalVariables;
 
@@ -10,6 +14,7 @@ public class SpawnerMenu : BaseScript
     private UIMenuItem navigatetoSelectorMenuItem;
     private UIMenuListItem modelList;
     private UIMenuItem confirmItem;
+    private UIMenuCheckboxItem automaticallyEnter;
 
     private void OurOnItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
     {
@@ -25,6 +30,13 @@ public class SpawnerMenu : BaseScript
                 Position = Game.PlayerPed.GetOffsetPosition(new Vector3(0f, 5f, 0f));
 
                 var newVehicle = World.CreateVehicle(modelname, Position, Game.PlayerPed.Heading);
+
+                //bool automaticallyEnter
+
+                //if (automaticallyEnter.Checked == true)
+                //{
+                //    Game.PlayerPed.SetIntoVehicle(newVehicle, VehicleSeat.Driver);
+                //}
 
                 TriggerEvent("chat:addMessage", new
                 {
@@ -51,6 +63,9 @@ public class SpawnerMenu : BaseScript
 
         modelList = new UIMenuListItem("Vehicle", policeModelList, 0);
         vehicleSelectorMenu.AddItem(modelList);
+
+        automaticallyEnter = new UIMenuCheckboxItem("Warp into vehicle?", false);
+        mainMenu.AddItem(automaticallyEnter);
 
         confirmItem = new UIMenuItem("Confirm");
         mainMenu.AddItem(confirmItem);
