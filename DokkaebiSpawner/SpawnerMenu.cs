@@ -2,6 +2,7 @@
 using CitizenFX.Core;
 using CitizenFX.Core.UI;
 using NativeUI;
+using Config.Reader;
 using static DokkaebiSpawner.GlobalVariables;
 
 /* DokkaebiSpawner | Developed by xSklzx Dokkaebi */
