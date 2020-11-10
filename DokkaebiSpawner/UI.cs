@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using System.Reflection;
 using System.Collections.Generic;
 using CitizenFX.Core;
-using CitizenFX.Core.UI;
 using NativeUI;
+using NativeUI.PauseMenu;
+using System;
 
 namespace DokkaebiSpawner
 {
@@ -11,6 +11,7 @@ namespace DokkaebiSpawner
     {
         private static MenuPool menuPool;
         private static UIMenu mainMenu;
+        public static string theItemDescription;
 
         static Menu()
         {
@@ -43,8 +44,12 @@ namespace DokkaebiSpawner
                     await BaseScript.Delay(0);
                 }
             }
-            Screen.ShowNotification("DokkaebiSpawner Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " has been initialized.");
-            Debug.WriteLine("DokkaebiSpawner Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " has been initialized.");
+            BaseScript.TriggerEvent("chat:addMessage", new
+            {
+                color = new[] { 0, 0, 0 },
+                multiline = true,
+                args = new[] { "[DokkaebiSpawner]", $"Spawned {theItemDescription} successfully" }
+            });
         }
 
         private static void VehicleSpawnMenu(UIMenu menu)
@@ -76,6 +81,7 @@ namespace DokkaebiSpawner
 
                 category.OnItemSelect += (sender, item, index) =>
                 {
+                    theItemDescription = String.Copy(item.Description);
                     Main.SpawnVehicle(item.Description);
                     Toggle();
                 };
