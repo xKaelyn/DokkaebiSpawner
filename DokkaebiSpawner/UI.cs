@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Reflection;
+using System.Collections.Generic;
 using CitizenFX.Core;
+using CitizenFX.Core.UI;
 using NativeUI;
 
 namespace DokkaebiSpawner
@@ -41,6 +43,8 @@ namespace DokkaebiSpawner
                     await BaseScript.Delay(0);
                 }
             }
+            Screen.ShowNotification("DokkaebiSpawner Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " has been initialized.");
+            Debug.WriteLine("DokkaebiSpawner Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " has been initialized.");
         }
 
         private static void VehicleSpawnMenu(UIMenu menu)

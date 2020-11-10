@@ -54,7 +54,6 @@
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpawnerMenu.cs" />
     <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>
