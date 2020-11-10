@@ -44,12 +44,6 @@ namespace DokkaebiSpawner
                     await BaseScript.Delay(0);
                 }
             }
-            BaseScript.TriggerEvent("chat:addMessage", new
-            {
-                color = new[] { 0, 0, 0 },
-                multiline = true,
-                args = new[] { "[DokkaebiSpawner]", $"Spawned {theItemDescription} successfully" }
-            });
         }
 
         private static void VehicleSpawnMenu(UIMenu menu)
@@ -83,6 +77,13 @@ namespace DokkaebiSpawner
                 {
                     theItemDescription = String.Copy(item.Description);
                     Main.SpawnVehicle(item.Description);
+
+                    BaseScript.TriggerEvent("chat:addMessage", new
+                    {
+                        color = new[] { 0, 0, 0 },
+                        args = new[] { "[DokkaebiSpawner]", $"Spawned {theItemDescription} successfully." }
+                    });
+
                     Toggle();
                 };
             }
